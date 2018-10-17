@@ -22,18 +22,34 @@ aside .startGame:hover {
 
 .game {
     flex: 4 1 auto;
-    display: table;
+    display: block;
     height: 100vh;
     border-collapse: collapse;
+    position: relative;
 }
 
 .game .row {
-    display: table-row;
+    display: block;
+    white-space: nowrap;
 }
 
 .game .row .cell {
-    display: table-cell;
+    display: inline-block;
     border: 1px solid;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    vertical-align: middle;
+}
+
+.game.gameover::before {
+    content: 'Game over';
+    color: red;
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .cell[data-status="mine"] {
