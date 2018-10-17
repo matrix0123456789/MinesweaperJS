@@ -40,11 +40,22 @@ aside .startGame:hover {
     height: 30px;
     margin: 5px;
     vertical-align: middle;
+    transition:300ms all;
 }
 
 .game.gameover::before {
-    content: 'Game over';
+    content: 'Game over!';
     color: red;
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.game.gamewon::before {
+    content: 'Wygrana!';
+    color: green;
     font-size: 50px;
     position: absolute;
     top: 50%;
@@ -62,6 +73,9 @@ aside .startGame:hover {
 
 .cell[data-status="flag"] {
     background: #888;
+}
+.cell[data-status="flag"]::before {
+    content:'🏴';
 }
 
 .cell[data-status="default"] {

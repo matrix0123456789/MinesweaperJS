@@ -2,6 +2,7 @@ class Game {
     constructor(rows, cols, mines, container) {
         this.isActive = true;
         container.classList.remove('gameover');
+        container.classList.remove('gamewon');
         this.rows = rows;
         this.cols = cols;
         this.mines = mines;
@@ -45,6 +46,14 @@ class Game {
                 cellHtml.onclick = () => {
                     this.open(cell);
                 };
+                cellHtml.oncontextmenu = e => e.preventDefault();
+                cellHtml.onmousedown = e => {
+                    if (e.button === 2) {
+                        this.mark(cell);
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                }
             }
         }
     }
@@ -52,6 +61,17 @@ class Game {
     gameOver() {
         this.isActive = false;
         this.container.classList.add('gameover');
+    }
+
+    checkWin() {
+        let remainingDefaults = 0;
+        this.map.forEach(row => row.forEach(cell => {
+            if (cell.status === 'default'||cell.status === 'flag') remainingDefaults++;
+        }));
+        if(remainingDefaults==this.mines){
+            this.isActive = false;
+            this.container.classList.add('gamewon');
+        }
     }
 
     calcBombsAround(cell) {
@@ -68,6 +88,15 @@ class Game {
             }
         }
         return ret;
+    }
+
+    mark(cell) {
+        if (!this.isActive) return;
+        let cellHtml = this.container.children[cell.row].children[cell.col];
+
+        if (cell.status === 'default') cell.status = 'flag';
+        else if (cell.status === 'flag') cell.status = 'default';
+        cellHtml.dataset.status = cell.status;
     }
 
     open(cell) {
@@ -87,6 +116,7 @@ class Game {
         } else {
             cellHtml.textContent = number;
         }
+        this.checkWin();
     }
 }
 
