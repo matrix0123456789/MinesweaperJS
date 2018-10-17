@@ -1,0 +1,30 @@
+body{
+    display: flex;
+}
+aside{
+    flex:1 1 auto;
+}
+.game{
+    flex:1 1 auto;
+    display: table;
+    height: 100vh;
+}
+.game .row{
+    display: table-row;
+}
+.game .row .cell{
+    display: table-cell;
+    border:1px solid;
+}
+.cell[data-status="mine"]{
+    background: red;
+}
+.cell[data-status="clear"]{
+    background: green;
+}
+.cell[data-status="flag"]{
+    background: #888;
+}
+.cell[data-status="default"]{
+    background: #ccc;
+}
